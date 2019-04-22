@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup, Viewport } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import { inputToDataUrl, extractPositionOfImage } from "./utils";
@@ -14,13 +14,15 @@ export interface IPhoto {
 
 interface IWorld {
   photos: IPhoto[];
+  viewport: Viewport;
+  onViewportChange: (e: Viewport) => void;
 }
 
-export default function World({ photos }: IWorld) {
+export default function World({ photos, viewport, onViewportChange }: IWorld) {
   return (
     <Map
-      center={[48.8534, 2.3488]}
-      zoom={13}
+      onViewPortChanged={onViewportChange}
+      viewport={viewport}
       style={{ height: "calc(100vh - 64px)", width: "100%" }}
       maxZoom={20}
     >

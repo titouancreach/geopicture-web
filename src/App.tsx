@@ -8,9 +8,15 @@ const { Header, Content, Sider } = Layout;
 import World, { IPhoto } from "./World";
 import { RcFile } from "antd/lib/upload/interface";
 import { inputToDataUrl, extractPositionOfImage } from "./utils";
+import { Viewport } from "react-leaflet";
 
 function App() {
   const [photoList, setPhotoList] = useState<IPhoto[]>([]);
+
+  const [viewport, setViewport] = useState<Viewport>({
+    center: [48.8534, 2.3488],
+    zoom: 13
+  });
 
   return (
     <Layout>
@@ -22,12 +28,26 @@ function App() {
       </Header>
       <Layout>
         <Content>
-          <World photos={photoList} />
+          <World
+            photos={photoList}
+            viewport={viewport}
+            onViewportChange={e => {
+              setViewport(e);
+            }}
+          />
         </Content>
         <Sider style={{ background: "white" }} className="z-1 shadow-1 pa3">
           <div className="w-100 tc">
             <Upload
               name="images"
+              onPreview={file => {
+                const photo = photoList.find(photo => photo.uid === file.uid);
+                const position = photo!.position as [number, number]; // Love totally broken leaflet types <3
+                setViewport({
+                  zoom: 20,
+                  center: position
+                });
+              }}
               customRequest={async ({
                 file,
                 onSuccess,

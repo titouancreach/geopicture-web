@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.ant-upload-list-item-done {
+  cursor: pointer;
+}
+
 .leaflet-pane {
   z-index: 0 !important;
 }
