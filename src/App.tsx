@@ -28,7 +28,7 @@ function App() {
         <Button
           shape="circle"
           icon="github"
-          href="https://github.com/titouancreach/studious-garbanzo"
+          href="https://github.com/titouancreach/geopicture-web"
         />
       </Header>
       <Layout>
