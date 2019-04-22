@@ -80,10 +80,11 @@ function App() {
                 }
               }}
               onRemove={file => {
-                const newPhotoList = photoList.filter(p => {
-                  return file.originFileObj !== p.file;
+                setPhotoList(prevPhotoList => {
+                  return prevPhotoList.filter(p => {
+                    return file.originFileObj !== p.file;
+                  });
                 });
-                setPhotoList(newPhotoList);
               }}
               multiple
             >
