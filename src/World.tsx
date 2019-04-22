@@ -26,7 +26,7 @@ export default function World({ photos, viewport, onViewportChange }: IWorld) {
     >
       <TileLayer
         url="https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}"
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution='<a href="https://github.com/titouancreach"> @titouancreach </a>'
         id="mapbox.streets"
         accessToken="pk.eyJ1IjoieXVuamllbGkiLCJhIjoiY2lxdmV5MG5rMDAxNmZta3FlNGhyMmpicSJ9.CTEQgAyZGROcpJouZuzJyA"
       />
