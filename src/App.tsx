@@ -25,6 +25,11 @@ function App() {
         style={{ background: "white" }}
       >
         <h1 className="f3 ma0 o-80">Geopicture</h1>
+        <Button
+          shape="circle"
+          icon="github"
+          href="https://github.com/titouancreach/studious-garbanzo"
+        />
       </Header>
       <Layout>
         <Content>
@@ -68,7 +73,7 @@ function App() {
                     uid,
                     file
                   };
-                  setPhotoList([...photoList, photo]);
+                  setPhotoList(prevPhotoList => [...prevPhotoList, photo]);
                   onSuccess();
                 } catch (e) {
                   onError(e);
