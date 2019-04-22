@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Map, TileLayer, Marker, Popup, Viewport } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
-import { inputToDataUrl, extractPositionOfImage } from "./utils";
-import { RcFile } from "antd/lib/upload/interface";
 
 export interface IPhoto {
   url: string;
