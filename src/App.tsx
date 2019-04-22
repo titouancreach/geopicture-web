@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import "./App.css";
 
-import { Layout, Button, Tooltip, Upload, Slider, Icon } from "antd";
+import { Layout, Button, Upload, Icon } from "antd";
 
 const { Header, Content, Sider } = Layout;
 
 import World, { IPhoto } from "./World";
 import { RcFile } from "antd/lib/upload/interface";
+import { inputToDataUrl, extractPositionOfImage } from "./utils";
 
 function App() {
-  const [fileList, setFileList] = useState<RcFile[]>([]);
+  const [photoList, setPhotoList] = useState<IPhoto[]>([]);
 
   return (
     <Layout>
@@ -21,21 +22,43 @@ function App() {
       </Header>
       <Layout>
         <Content>
-          <World files={fileList} />
+          <World photos={photoList} />
         </Content>
         <Sider style={{ background: "white" }} className="z-1 shadow-1 pa3">
           <div className="w-100 tc">
             <Upload
               name="images"
-              beforeUpload={(file: RcFile) => {
-                setFileList([...fileList, file]);
-                return false;
+              customRequest={async ({
+                file,
+                onSuccess,
+                onError
+              }: {
+                file: RcFile;
+                onSuccess: Function;
+                onError: Function;
+              }) => {
+                try {
+                  const url = await inputToDataUrl(file);
+                  const position = await extractPositionOfImage(file);
+                  const { uid } = file;
+
+                  const photo = {
+                    position,
+                    url,
+                    uid,
+                    file
+                  };
+                  setPhotoList([...photoList, photo]);
+                  onSuccess();
+                } catch (e) {
+                  onError(e);
+                }
               }}
               onRemove={file => {
-                const newFileList = fileList.filter(f => {
-                  return file.originFileObj !== f;
+                const newPhotoList = photoList.filter(p => {
+                  return file.originFileObj !== p.file;
                 });
-                setFileList(newFileList);
+                setPhotoList(newPhotoList);
               }}
               multiple
             >

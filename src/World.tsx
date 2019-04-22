@@ -9,38 +9,14 @@ export interface IPhoto {
   url: string;
   position: L.LatLngExpression;
   uid: string;
+  file: File;
 }
 
 interface IWorld {
-  files: RcFile[];
+  photos: IPhoto[];
 }
 
-export default function World({ files }: IWorld) {
-  const [photos, setPhotos] = useState<IPhoto[]>([]);
-
-  useEffect(() => {
-    async function fileToPhoto(file: RcFile): Promise<IPhoto> {
-      const [url, position] = await Promise.all([
-        inputToDataUrl(file),
-        extractPositionOfImage(file)
-      ]);
-
-      const { uid } = file;
-      return {
-        position,
-        url,
-        uid
-      };
-    }
-
-    const photoPromises = files.map(fileToPhoto);
-
-    Promise.all(photoPromises).then(phts => {
-      console.log(phts);
-      setPhotos(phts);
-    });
-  }, [files]);
-
+export default function World({ photos }: IWorld) {
   return (
     <Map
       center={[48.8534, 2.3488]}

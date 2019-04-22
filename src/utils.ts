@@ -24,26 +24,31 @@ export function extractPositionOfImage(
 ): Promise<L.LatLngExpression> {
   return new Promise((resolve, reject) => {
     EXIF.getData(file, function(this: typeof EXIF.getData) {
-      const latitude = EXIF.getTag<number[]>(this, "GPSLatitude");
-      const longitude = EXIF.getTag<number[]>(this, "GPSLongitude");
-      const latitudeRef = EXIF.getTag<string>(this, "GPSLatitudeRef");
-      const longitudeRef = EXIF.getTag<string>(this, "GPSLongitudeRef");
+      const unsafeLatitude = EXIF.getTag<number[]>(this, "GPSLatitude");
+      const unsafeLongitude = EXIF.getTag<number[]>(this, "GPSLongitude");
+      const unsafeLatitudeRef = EXIF.getTag<string>(this, "GPSLatitudeRef");
+      const unsafeLongitudeRef = EXIF.getTag<string>(this, "GPSLongitudeRef");
 
-      if (
-        latitude == null ||
-        longitude == null ||
-        latitudeRef == null ||
-        longitudeRef == null
-      ) {
-        reject({
+      if (unsafeLatitude === undefined || unsafeLongitude === undefined) {
+        return reject({
           error: Error.MISSING_TAGS,
           file
         });
       }
 
       const position = [
-        convertDMSToDD(latitude[0], latitude[1], latitude[2], latitudeRef),
-        convertDMSToDD(longitude[0], longitude[1], longitude[2], longitudeRef)
+        convertDMSToDD(
+          unsafeLatitude![0],
+          unsafeLatitude![1],
+          unsafeLatitude![2],
+          unsafeLatitudeRef as string
+        ),
+        convertDMSToDD(
+          unsafeLongitude![0],
+          unsafeLongitude![1],
+          unsafeLongitude![2],
+          unsafeLongitudeRef as string
+        )
       ] as L.LatLngExpression;
 
       // TODO: check bounds of [latitude, longitude]
