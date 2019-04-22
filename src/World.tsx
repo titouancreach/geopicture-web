@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
-import { inputToDataUrl } from "./utils";
+import { inputToDataUrl, extractPositionOfImage } from "./utils";
 import { RcFile } from "antd/lib/upload/interface";
 
 export interface IPhoto {
@@ -20,8 +20,11 @@ export default function World({ files }: IWorld) {
 
   useEffect(() => {
     async function fileToPhoto(file: RcFile): Promise<IPhoto> {
-      const url = await inputToDataUrl(file);
-      const position: L.LatLngExpression = [48.8534, 2.3488];
+      const [url, position] = await Promise.all([
+        inputToDataUrl(file),
+        extractPositionOfImage(file)
+      ]);
+
       const { uid } = file;
       return {
         position,
@@ -33,6 +36,7 @@ export default function World({ files }: IWorld) {
     const photoPromises = files.map(fileToPhoto);
 
     Promise.all(photoPromises).then(phts => {
+      console.log(phts);
       setPhotos(phts);
     });
   }, [files]);
