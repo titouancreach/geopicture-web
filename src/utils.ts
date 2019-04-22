@@ -1,7 +1,8 @@
 import EXIF from "exif-js";
 
 export enum Error {
-  MISSING_TAGS
+  MISSING_TAGS,
+  INVALID_IMAGE
 }
 
 function convertDMSToDD(
@@ -54,7 +55,7 @@ export function extractPositionOfImage(
 export function inputToDataUrl(file: File): Promise<string> {
   const reader = new FileReader();
 
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     reader.addEventListener(
       "load",
       () => {
@@ -63,6 +64,13 @@ export function inputToDataUrl(file: File): Promise<string> {
       },
       false
     );
+
+    reader.addEventListener("error", () => {
+      reject({
+        error: Error.INVALID_IMAGE,
+        file
+      });
+    });
 
     reader.readAsDataURL(file);
   });
