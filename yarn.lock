@@ -3127,11 +3127,6 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-date-format-lite@~0.7.1:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/date-format-lite/-/date-format-lite-0.7.4.tgz#fb6afef56f0987c3952b12a0a90e18c067c80892"
-  integrity sha1-+2r+9W8Jh8OVKxKgqQ4YwGfICJI=
-
 date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
@@ -3901,14 +3896,6 @@ exif-js@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/exif-js/-/exif-js-2.3.0.tgz#9d10819bf571f873813e7640241255ab9ce1a814"
   integrity sha1-nRCBm/Vx+HOBPnZAJBJVq5zhqBQ=
-
-exifjs@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/exifjs/-/exifjs-1.1.2.tgz#a97b1af5bf859cf8e44e4e75586c4fc748f0b7a3"
-  integrity sha1-qXsa9b+FnPjkTk51WGxPx0jwt6M=
-  dependencies:
-    date-format-lite "~0.7.1"
-    promise "^7.0.4"
 
 exit@^0.1.2:
   version "0.1.2"
@@ -7384,11 +7371,6 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-piexifjs@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/piexifjs/-/piexifjs-1.0.4.tgz#6f61e85511fd57eb75591cfb7290688e0abab3fd"
-  integrity sha512-va6FOuTVWC2bbiC4WiKus8scuAWoqgM4XwnmtttKe3YkwakyqTvsYMyctkTZv9Ra/uK7EdjTlyIA2U8rSDuwOw==
-
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
@@ -8166,7 +8148,7 @@ promise@8.0.2:
   dependencies:
     asap "~2.0.6"
 
-promise@^7.0.4, promise@^7.1.1:
+promise@^7.1.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
   integrity sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==
