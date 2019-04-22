@@ -7,6 +7,8 @@ Clone of https://github.com/titouancreach/geopictures-visu with some addition:
   - every image manipulation is done client side
   - typescript
   - react with react-leaflet
+  - dynamically add or remove picture
+  - click on the picture in the list to zoom to it
  
  
 ## Run locally
