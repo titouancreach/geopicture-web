@@ -1,33 +1,61 @@
+@import "~antd/dist/antd.css";
+@import "~react-leaflet-markercluster/dist/styles.min.css";
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.leaflet-pane {
+  z-index: 0 !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.leaflet-control {
+  z-index: 1 !important;
 }
 
-.App-link {
-  color: #61dafb;
+.leaflet-marker-photo {
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 10px #888;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.leaflet-marker-photo div {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.leaflet-marker-photo b {
+  position: absolute;
+  top: -7px;
+  right: -11px;
+  color: #555;
+  background-color: #fff;
+  border-radius: 8px;
+  height: 12px;
+  min-width: 12px;
+  line-height: 12px;
+  text-align: center;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+}
+
+.leaflet-popup-photo .leaflet-popup-content-wrapper {
+  padding: 6px;
+  border-radius: 4px;
+}
+.leaflet-popup-photo .leaflet-popup-content {
+  margin: 0;
+}
+.leaflet-popup-photo .leaflet-popup-tip {
+  background: white;
+}
+.leaflet-popup-photo img,
+.leaflet-popup-photo video {
+  display: block;
+  width: 100%;
+}
+
+.leaflet-popup-photo .leaflet-popup-close-button {
+  padding: 7px 7px 0 0 !important;
 }
