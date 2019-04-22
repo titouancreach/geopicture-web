@@ -51,7 +51,6 @@ export function extractPositionOfImage(
         )
       ] as L.LatLngExpression;
 
-      // TODO: check bounds of [latitude, longitude]
       resolve(position);
     });
   });
