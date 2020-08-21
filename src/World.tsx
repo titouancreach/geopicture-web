@@ -25,10 +25,12 @@ export default function World({ photos, viewport, onViewportChange }: IWorld) {
       maxZoom={20}
     >
       <TileLayer
-        url="https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}"
+        url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}"
         attribution='<a href="https://github.com/titouancreach"> @titouancreach </a>'
-        id="mapbox.streets"
+        id="mapbox/streets-v11"
         accessToken="pk.eyJ1IjoieXVuamllbGkiLCJhIjoiY2lxdmV5MG5rMDAxNmZta3FlNGhyMmpicSJ9.CTEQgAyZGROcpJouZuzJyA"
+        zoomOffset={-1}
+        tileSize={512}
       />
 
       <MarkerClusterGroup
