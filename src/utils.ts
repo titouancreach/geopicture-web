@@ -1,15 +1,14 @@
 import EXIF from "exif-js";
 
-export enum Error {
-  MISSING_TAGS,
-  INVALID_IMAGE
-}
+import { GeoTagsMissing, InvalidImage } from "./exceptions";
+
+type Direction = "W" | "S" | "N" | "E";
 
 function convertDMSToDD(
   degrees: number,
   minutes: number,
   seconds: number,
-  direction: string //TODO: enum with the list of all possible directions
+  direction: Direction
 ) {
   let dd = Number(degrees) + Number(minutes) / 60 + Number(seconds) / (60 * 60);
 
@@ -19,47 +18,47 @@ function convertDMSToDD(
   return dd;
 }
 
-export function extractPositionOfImage(
+export async function extractPositionOfImage(
   file: File
 ): Promise<L.LatLngExpression> {
-  return new Promise((resolve, reject) => {
+
+  const exifData = (await new Promise((resolve) =>
     EXIF.getData(file, function(this: typeof EXIF.getData) {
-      const unsafeLatitude = EXIF.getTag<number[]>(this, "GPSLatitude");
-      const unsafeLongitude = EXIF.getTag<number[]>(this, "GPSLongitude");
-      const unsafeLatitudeRef = EXIF.getTag<string>(this, "GPSLatitudeRef");
-      const unsafeLongitudeRef = EXIF.getTag<string>(this, "GPSLongitudeRef");
+      resolve(EXIF.getAllTags(this));
+    })
+  )) as any;
 
-      if (unsafeLatitude === undefined || unsafeLongitude === undefined) {
-        return reject({
-          error: Error.MISSING_TAGS,
-          file
-        });
-      }
+  const unsafeLatitude = exifData["GPSLatitude"] as number[] | undefined;
+  const unsafeLongitude = exifData["GPSLongitude"] as number[] | undefined;
+  const unsafeLatitudeRef = exifData["GPSLatitudeRef"] as Direction;
+  const unsafeLongitudeRef = exifData["GPSLongitudeRef"] as Direction;
 
-      const position = [
-        convertDMSToDD(
-          unsafeLatitude![0],
-          unsafeLatitude![1],
-          unsafeLatitude![2],
-          unsafeLatitudeRef as string
-        ),
-        convertDMSToDD(
-          unsafeLongitude![0],
-          unsafeLongitude![1],
-          unsafeLongitude![2],
-          unsafeLongitudeRef as string
-        )
-      ] as L.LatLngExpression;
+  if (unsafeLatitude === undefined || unsafeLongitude === undefined) {
+    throw new GeoTagsMissing();
+  }
 
-      resolve(position);
-    });
-  });
+  const position = [
+    convertDMSToDD(
+      unsafeLatitude![0],
+      unsafeLatitude![1],
+      unsafeLatitude![2],
+      unsafeLatitudeRef
+    ),
+    convertDMSToDD(
+      unsafeLongitude![0],
+      unsafeLongitude![1],
+      unsafeLongitude![2],
+      unsafeLongitudeRef
+    ),
+  ] as L.LatLngExpression;
+
+  return position;
 }
 
 export function inputToDataUrl(file: File): Promise<string> {
   const reader = new FileReader();
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     reader.addEventListener(
       "load",
       () => {
@@ -70,10 +69,7 @@ export function inputToDataUrl(file: File): Promise<string> {
     );
 
     reader.addEventListener("error", () => {
-      reject({
-        error: Error.INVALID_IMAGE,
-        file
-      });
+      throw new InvalidImage();
     });
 
     reader.readAsDataURL(file);

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import "./App.css";
 
-import { Layout, Button, Upload, Icon } from "antd";
+import { Layout, Button, Upload, Icon, notification } from "antd";
 
 const { Header, Content, Sider } = Layout;
 
@@ -10,12 +9,16 @@ import { RcFile } from "antd/lib/upload/interface";
 import { inputToDataUrl, extractPositionOfImage } from "./utils";
 import { Viewport } from "react-leaflet";
 
+import { GeoTagsMissing, InvalidImage } from "./exceptions";
+
+import "./App.css";
+
 function App() {
   const [photoList, setPhotoList] = useState<IPhoto[]>([]);
 
   const [viewport, setViewport] = useState<Viewport>({
     center: [48.8534, 2.3488],
-    zoom: 13
+    zoom: 13,
   });
 
   return (
@@ -36,27 +39,32 @@ function App() {
           <World
             photos={photoList}
             viewport={viewport}
-            onViewportChange={e => {
+            onViewportChange={(e) => {
               setViewport(e);
             }}
           />
         </Content>
-        <Sider style={{ background: "white" }} className="z-1 shadow-1 pa3">
+        <Sider style={{ background: "white" }} className="z-1 shadow-1 pa3" width="250">
           <div className="w-100 tc">
             <Upload
               name="images"
-              onPreview={file => {
-                const photo = photoList.find(photo => photo.uid === file.uid);
+              onPreview={(file) => {
+                const photo = photoList.find((photo) => photo.uid === file.uid);
+
+                if (!photo) {
+                  return;
+                }
+
                 const position = photo!.position as [number, number]; // Love totally broken leaflet types <3
                 setViewport({
                   zoom: 20,
-                  center: position
+                  center: position,
                 });
               }}
               customRequest={async ({
                 file,
                 onSuccess,
-                onError
+                onError,
               }: {
                 file: RcFile;
                 onSuccess: Function;
@@ -64,6 +72,7 @@ function App() {
               }) => {
                 try {
                   const url = await inputToDataUrl(file);
+
                   const position = await extractPositionOfImage(file);
                   const { uid } = file;
 
@@ -71,17 +80,31 @@ function App() {
                     position,
                     url,
                     uid,
-                    file
+                    file,
                   };
-                  setPhotoList(prevPhotoList => [...prevPhotoList, photo]);
+                  setPhotoList((prevPhotoList) => [...prevPhotoList, photo]);
                   onSuccess();
                 } catch (e) {
+                  if (e instanceof GeoTagsMissing) {
+                    notification.error({
+                      message: "Missing or invalid geotags",
+                      description:
+                        "The image contains invalid geotags and cannot be displayed on the map",
+                    });
+                  } else {
+                    notification.error({
+                      message: "Invalid image",
+                      description:
+                        "The image is invalid",
+                    });
+                  }
+
                   onError(e);
                 }
               }}
-              onRemove={file => {
-                setPhotoList(prevPhotoList => {
-                  return prevPhotoList.filter(p => {
+              onRemove={(file) => {
+                setPhotoList((prevPhotoList) => {
+                  return prevPhotoList.filter((p) => {
                     return file.originFileObj !== p.file;
                   });
                 });

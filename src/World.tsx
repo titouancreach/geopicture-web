@@ -58,10 +58,10 @@ export default function World({ photos, viewport, onViewportChange }: IWorld) {
             })}
           >
             <Popup className="leaflet-popup-photo" minWidth={400}>
-              <div>
+              <figure>
                 <img src={photo.url} />
-                <p>{photo.file.name}</p>
-              </div>
+                <figcaption className="pt2 tc">{photo.file.name}</figcaption>
+              </figure>
             </Popup>
           </Marker>
         ))}
