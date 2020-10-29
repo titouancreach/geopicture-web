@@ -13,7 +13,7 @@ cd ./docker
 Install yarn dependencies:
 
 ```
-docker-compose run build yarn
+docker-compose run --rm build npm install
 ```
 
 Start the developpement server
@@ -24,14 +24,15 @@ docker-compose up -d
 ## Features
 
 Clone of https://github.com/titouancreach/geopictures-visu with some addition:
-  - entirely accessible from a web browser (no more elecron)
-  - every image manipulation is done client side
-  - typescript
-  - react with react-leaflet
-  - dynamically add or remove picture
-  - click on the picture in the list to zoom to it
+  - Entirely accessible from a web browser (no more elecron)
+  - Every image manipulation is done client side
+  - Typescript
+  - React with react-leaflet
+  - Dynamically add or remove picture
+  - Click on the picture in the list to focus it
  
 ## Deploy to gh pages
+
 ```
-yarn deploy
+docker-compose run --rm build npm run deploy
 ```
