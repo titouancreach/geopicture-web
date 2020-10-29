@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import { Layout, Button, Upload, Icon, notification } from "antd";
+import { Layout, Button, Upload, notification } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
-const { Header, Content, Sider } = Layout;
 
 import World, { IPhoto } from "./World";
 import { RcFile } from "antd/lib/upload/interface";
@@ -12,6 +12,8 @@ import { Viewport } from "react-leaflet";
 import { GeoTagsMissing, InvalidImage } from "./exceptions";
 
 import "./App.css";
+
+const { Header, Content, Sider } = Layout;
 
 function App() {
   const [photoList, setPhotoList] = useState<IPhoto[]>([]);
@@ -112,7 +114,7 @@ function App() {
               multiple
             >
               <Button className="ma2 mt0">
-                <Icon type="upload" /> Click to upload
+		<UploadOutlined /> Click to upload
               </Button>
             </Upload>
           </div>
