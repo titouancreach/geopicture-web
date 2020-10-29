@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Layout, Button, Upload, notification } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, GithubOutlined } from "@ant-design/icons";
 
 
 import World, { IPhoto } from "./World";
@@ -32,7 +32,7 @@ function App() {
         <h1 className="f3 ma0 o-80">Geopicture</h1>
         <Button
           shape="circle"
-          icon="github"
+          icon={ <GithubOutlined /> }
           href="https://github.com/titouancreach/geopicture-web"
         />
       </Header>
@@ -114,7 +114,7 @@ function App() {
               multiple
             >
               <Button className="ma2 mt0">
-		<UploadOutlined /> Click to upload
+                <UploadOutlined /> Click to upload
               </Button>
             </Upload>
           </div>
