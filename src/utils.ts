@@ -12,7 +12,7 @@ function convertDMSToDD(
 ) {
   let dd = Number(degrees) + Number(minutes) / 60 + Number(seconds) / (60 * 60);
 
-  if (direction == "S" || direction == "W") {
+  if (direction === "S" || direction === "W") {
     dd = dd * -1;
   }
   return dd;
