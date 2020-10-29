@@ -9,7 +9,7 @@ import { RcFile } from "antd/lib/upload/interface";
 import { inputToDataUrl, extractPositionOfImage } from "./utils";
 import { Viewport } from "react-leaflet";
 
-import { GeoTagsMissing, InvalidImage } from "./exceptions";
+import { GeoTagsMissing } from "./exceptions";
 
 import "./App.css";
 

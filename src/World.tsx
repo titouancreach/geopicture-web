@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Map, TileLayer, Marker, Popup, Viewport } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
@@ -59,7 +59,7 @@ export default function World({ photos, viewport, onViewportChange }: IWorld) {
           >
             <Popup className="leaflet-popup-photo" minWidth={400}>
               <figure>
-                <img src={photo.url} />
+                <img src={photo.url} alt="popup" />
                 <figcaption className="pt2 tc">{photo.file.name}</figcaption>
               </figure>
             </Popup>
