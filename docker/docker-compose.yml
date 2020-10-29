@@ -15,5 +15,6 @@ services:
     image: "node:lts"
     volumes:
       - $HOME/.ssh:/root/.ssh
+      - $HOME/.gitconfig:/root/.gitconfig
       - ../:/app
     working_dir: "/app"
