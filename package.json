@@ -20,7 +20,7 @@
     "react-dom": "^17.0.1",
     "react-leaflet": "^2.8.0",
     "react-leaflet-markercluster": "^2.0.0-rc3",
-    "react-scripts": "^4.0.0",
+    "react-scripts": "^5.0.1",
     "typescript": "^4.0.5"
   },
   "scripts": {
